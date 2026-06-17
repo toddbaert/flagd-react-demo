@@ -1,0 +1,18 @@
+services:
+  flagd:
+    image: ghcr.io/open-feature/flagd:v0.16.0
+    container_name: flagd
+    command:
+      - start
+      - --uri=file:/etc/flagd/demo.flagd.json
+      - --cors-origin=*
+    ports:
+      # OFREP / HTTP (also serves gRPC connect)
+      - "8013:8013"
+      # OFREP-only port
+      - "8016:8016"
+      # metrics / management
+      - "8014:8014"
+    volumes:
+      - ./flags/demo.flagd.json:/etc/flagd/demo.flagd.json:ro
+    restart: unless-stopped

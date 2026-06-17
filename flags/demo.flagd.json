@@ -1,0 +1,48 @@
+{
+  "$schema": "https://flagd.dev/schema/v0/flags.json",
+  "flags": {
+    "welcome-message": {
+      "state": "ENABLED",
+      "variants": {
+        "on": true,
+        "off": false
+      },
+      "defaultVariant": "on"
+    },
+    "hex-color": {
+      "state": "ENABLED",
+      "variants": {
+        "red": "#c0392b",
+        "green": "#27ae60",
+        "blue": "#2980b9"
+      },
+      "defaultVariant": "blue",
+      "targeting": {
+        "if": [
+          { "==": [{ "var": "tier" }, "premium"] },
+          "green",
+          null
+        ]
+      }
+    },
+    "fib-algo": {
+      "state": "ENABLED",
+      "variants": {
+        "recursive": "recursive",
+        "memo": "memo",
+        "loop": "loop",
+        "binet": "binet"
+      },
+      "defaultVariant": "recursive",
+      "targeting": {
+        "fractional": [
+          { "var": "targetingKey" },
+          ["recursive", 25],
+          ["memo", 25],
+          ["loop", 25],
+          ["binet", 25]
+        ]
+      }
+    }
+  }
+}
