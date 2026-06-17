@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  OpenFeature,
+  useContextMutator,
   useFlag,
   useOpenFeatureClientStatus,
 } from "@openfeature/react-sdk";
@@ -32,7 +32,10 @@ function Flags() {
       <ul>
         <li>
           <strong>welcome-message</strong>: <code>{String(welcome.value)}</code>{" "}
-          <em>({String(welcome.reason)})</em>
+          <em>
+            ({String(welcome.reason)}
+            {welcome.variant ? `, variant=${welcome.variant}` : ""})
+          </em>
         </li>
         <li>
           <strong>hex-color</strong>: <code>{color.value}</code>{" "}
@@ -43,7 +46,10 @@ function Flags() {
         </li>
         <li>
           <strong>fib-algo</strong>: <code>{algo.value}</code>{" "}
-          <em>({String(algo.reason)})</em>
+          <em>
+            ({String(algo.reason)}
+            {algo.variant ? `, variant=${algo.variant}` : ""})
+          </em>
         </li>
       </ul>
     </section>
@@ -51,11 +57,12 @@ function Flags() {
 }
 
 function ContextEditor() {
+  const { setContext } = useContextMutator();
   const [targetingKey, setTargetingKey] = useState("user-1");
   const [tier, setTier] = useState("free");
 
   const apply = () => {
-    OpenFeature.setContext({ targetingKey, tier });
+    setContext({ targetingKey, tier });
   };
 
   return (
